@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,6 +65,11 @@ public class PlayerController : MonoBehaviour
 
 		for (int tapCount = 0; tapCount < Input.touchCount; tapCount++) {
 			Touch touch = Input.GetTouch(tapCount);
+
+			if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) {
+				// you touched at least one UI element
+				continue;
+			}
  
 			if (touch.phase == TouchPhase.Began) {
 				if (touch.position.x > _slowdownZoneEnd) {		// controlling horizontal movement
