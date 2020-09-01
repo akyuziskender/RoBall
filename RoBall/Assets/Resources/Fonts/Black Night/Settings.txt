@@ -1,0 +1,2 @@
+Color: FFC194
+Font size: 375
