@@ -23,8 +23,13 @@ public class GameManager : MonoBehaviour
 	private void Start() {
 		SoundManager.Initialize();
 		SoundManager.PlayMusic(SoundManager.Audio.InGameMusic);
+
 		LoadData();
 		CreateLevel();
+
+		if (PlayerPrefManager.GetTutorialSeen() == false) {
+			DisplayTutorialPanel();
+		}
 	}
 
 	private void Update() {
@@ -50,22 +55,29 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	private void DisplayTutorialPanel() {
+		GameUIController.DisplayTutorialPanel();
+		PlayerPrefManager.SetTutorialSeen(true);
+		TogglePause();
+	}
+
 	private void LoadData() {
-		_playerData = SaveSystem.LoadData();
 		_currentLevel = DataManager.Instance.SelectedLevel;
 
 		if (_currentLevel == GameConfigData.Instance.NumOfLevels) {
 			_currentLevel--;
 		}
-
-		if (PlayerPrefManager.GetTutorialSeen() == false) {
-			GameUIController.DisplayTutorialPanel();
-			PlayerPrefManager.SetTutorialSeen(true);
-			TogglePause();
-		}
 	}
 
 	private void SaveData(int passedLevel, int stars) {
+		_playerData = SaveSystem.LoadData();
+
+		if (_playerData != null && _playerData.CurrentLevel != passedLevel) {
+			// checking if the score is less than the previous one
+			if (_playerData.Scores[passedLevel] >= stars)
+				return;		// return and don't save this score
+		}
+
 		SaveSystem.SaveData(passedLevel, stars);
 	}
 
