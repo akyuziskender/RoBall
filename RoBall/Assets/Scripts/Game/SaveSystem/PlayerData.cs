@@ -28,7 +28,6 @@ public class PlayerData {
 		}
 
 		// save the new score in the array
-		if (Scores[level] < stars)
-			Scores[level] = stars;
+		Scores[level] = stars;
 	}
 }
