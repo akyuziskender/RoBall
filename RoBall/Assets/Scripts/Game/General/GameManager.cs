@@ -44,14 +44,14 @@ public class GameManager : MonoBehaviour
 			_isGamePaused = true;
 			if (CheckGoalReached()) {		// Level completed successfully!
 				int numOfStars = CalculateNumOfStarsToDisplay();
-				LevelComplete(numOfStars);
+				LevelComplete(numOfStars, _levelCompleteScreenDelay);
 			}
 			else {		// Not enough cubes are collected!
-				LevelComplete(0);
+				LevelComplete(0, _levelCompleteScreenDelay);
 			}
 		}
 		else if (!_levelCompleteScreenDisplayed && TimerCountdown <= 0) {		// Time is up!
-			LevelComplete(0);
+			LevelComplete(0, 0.1f);
 		}
 	}
 
@@ -81,16 +81,16 @@ public class GameManager : MonoBehaviour
 		SaveSystem.SaveData(passedLevel, stars);
 	}
 
-	private void LevelComplete(int numOfStars) {
-		StartCoroutine(GameUIController.DisplayLevelCompleteScreen(numOfStars, _levelCompleteScreenDelay));
+	private void LevelComplete(int numOfStars, float panelDelay) {
+		StartCoroutine(GameUIController.DisplayLevelCompleteScreen(numOfStars, panelDelay));
 		_levelCompleteScreenDisplayed = true;
 
 		if (numOfStars > 0) {
-			StartCoroutine(SoundManager.PlaySoundWithDelay(SoundManager.Audio.LevelWin, _levelCompleteScreenDelay));
+			StartCoroutine(SoundManager.PlaySoundWithDelay(SoundManager.Audio.LevelWin, panelDelay));
 			SaveData(_currentLevel, numOfStars);
 		}
 		else {
-			StartCoroutine(SoundManager.PlaySoundWithDelay(SoundManager.Audio.LevelLose, _levelCompleteScreenDelay));
+			StartCoroutine(SoundManager.PlaySoundWithDelay(SoundManager.Audio.LevelLose, panelDelay));
 		}
 	}
 
@@ -140,6 +140,14 @@ public class GameManager : MonoBehaviour
 
 	private int CalculateNumOfStarsToDisplay() {
 		float cubePercentage = ((float)(Player.CubeCount - LevelGoal) + 1) / (float)((NumOfCubes - LevelGoal) + 1);
-		return Mathf.RoundToInt(cubePercentage * 3);
+		int numOfStars = Mathf.RoundToInt(cubePercentage * 3);
+
+		// make sure that max number of star is 3 and min is 1
+		if (numOfStars > 3)
+			numOfStars = 3;
+		else if (numOfStars < 1)
+			numOfStars = 1;
+
+		return numOfStars;
 	}
 }
