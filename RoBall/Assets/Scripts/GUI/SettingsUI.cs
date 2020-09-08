@@ -8,6 +8,7 @@ public class SettingsUI : MonoBehaviour
 	public Button MusicButton, SoundButton;
 	public Sprite MusicOnSprite, MusicOffSprite;
 	public Sprite SoundOnSprite, SoundOffSprite;
+	public UITweener PopUpWindowUITweener;
 
 	private void Start() {
 		bool isMusicOn = PlayerPrefManager.GetMusicOn();
@@ -26,7 +27,7 @@ public class SettingsUI : MonoBehaviour
 		SoundManager.PlaySound(SoundManager.Audio.Click);
 		SaveSystem.DeleteData();
 		LevelSelectUI.RefreshGUI();		// refreshing level select gui after deleting the data
-		PopUpWindow.SetActive(false);
+		PopUpWindowUITweener.Disable(DisablePopUpWindow);
 	}
 
 	public void ToggleMusic() {
@@ -45,6 +46,10 @@ public class SettingsUI : MonoBehaviour
 
 	public void ReturnToSettingsMenu() {
 		SoundManager.PlaySound(SoundManager.Audio.Click);
+		PopUpWindowUITweener.Disable(DisablePopUpWindow);
+	}
+
+	public void DisablePopUpWindow() {
 		PopUpWindow.SetActive(false);
 	}
 

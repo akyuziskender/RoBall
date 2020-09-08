@@ -752,7 +752,9 @@ PrefabInstance:
       propertyPath: PlayerController
       value: 
       objectReference: {fileID: 2889687052714221066}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7080789323146431081, guid: 38419de43814a4e419abd9239b22d4e9, type: 3}
+    - {fileID: 4784102350262933672, guid: 38419de43814a4e419abd9239b22d4e9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 38419de43814a4e419abd9239b22d4e9, type: 3}
 --- !u!224 &4207366366366922983 stripped
 RectTransform:
