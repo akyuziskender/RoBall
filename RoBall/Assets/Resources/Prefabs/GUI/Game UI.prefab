@@ -2210,6 +2210,7 @@ GameObject:
   - component: {fileID: 5900166591805119934}
   - component: {fileID: 5900166591805119928}
   - component: {fileID: 5900166591805119929}
+  - component: {fileID: 8076923956713356596}
   m_Layer: 5
   m_Name: Third
   m_TagString: Untagged
@@ -2274,6 +2275,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8076923956713356596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5900166591805119935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf6e523609ac6438d00368d0f578ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToAnimate: {fileID: 0}
+  AnimationType: 1
+  EaseType: 0
+  Duration: 0.2
+  Delay: 0.35
+  Loop: 0
+  PingPong: 0
+  StartPositionOffset: 1
+  From: {x: 3, y: 3, z: 1}
+  To: {x: 1.35, y: 1.35, z: 1}
+  ShowOnEnable: 1
+  WorkOnDisable: 0
 --- !u!1 &5900166591830719235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2606,6 +2631,7 @@ GameObject:
   - component: {fileID: 5900166591981952134}
   - component: {fileID: 5900166591981952128}
   - component: {fileID: 5900166591981952129}
+  - component: {fileID: 813025958295847533}
   m_Layer: 5
   m_Name: Second
   m_TagString: Untagged
@@ -2670,6 +2696,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &813025958295847533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5900166591981952135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf6e523609ac6438d00368d0f578ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToAnimate: {fileID: 0}
+  AnimationType: 1
+  EaseType: 0
+  Duration: 0.2
+  Delay: 0.2
+  Loop: 0
+  PingPong: 0
+  StartPositionOffset: 1
+  From: {x: 4, y: 4, z: 1}
+  To: {x: 1.7, y: 1.7, z: 1}
+  ShowOnEnable: 1
+  WorkOnDisable: 0
 --- !u!1 &5900166592019435062
 GameObject:
   m_ObjectHideFlags: 0
@@ -3940,6 +3990,7 @@ GameObject:
   - component: {fileID: 5900166592568051552}
   - component: {fileID: 5900166592568051554}
   - component: {fileID: 5900166592568051555}
+  - component: {fileID: 4353475687247992046}
   m_Layer: 5
   m_Name: First
   m_TagString: Untagged
@@ -4004,6 +4055,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4353475687247992046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5900166592568051553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf6e523609ac6438d00368d0f578ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToAnimate: {fileID: 0}
+  AnimationType: 1
+  EaseType: 0
+  Duration: 0.2
+  Delay: 0.05
+  Loop: 0
+  PingPong: 0
+  StartPositionOffset: 1
+  From: {x: 3, y: 3, z: 1}
+  To: {x: 1.35, y: 1.35, z: 1}
+  ShowOnEnable: 1
+  WorkOnDisable: 0
 --- !u!1 &5900166592569136148
 GameObject:
   m_ObjectHideFlags: 0
