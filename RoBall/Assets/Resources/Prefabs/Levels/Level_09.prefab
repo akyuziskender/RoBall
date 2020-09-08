@@ -207,7 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumOfCubes: 16
   Goal: 13
-  Time: 37
+  Time: 30
 --- !u!1 &3460087517972252456
 GameObject:
   m_ObjectHideFlags: 0
