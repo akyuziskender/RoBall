@@ -108,5 +108,8 @@ public class PlayerController : MonoBehaviour
 		if (other.gameObject.CompareTag("FinishPlatform")) {
 			_reachedEnd = true;
 		}
+		else if (other.gameObject.CompareTag("MovingPlatform")) {
+			other.gameObject.transform.parent.GetComponent<Mover>().Moving = true;
+		}
 	}
 }

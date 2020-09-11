@@ -19,6 +19,11 @@ public class Mover : MonoBehaviour
 	private float _moveTime;
 	private bool _moving = true;
 
+	public bool Moving {
+		get { return _moving; }
+		set { _moving = value; }
+	}
+
 	private void Start () {
 		_transform = Object.transform;
 		_moveTime = 0f;
