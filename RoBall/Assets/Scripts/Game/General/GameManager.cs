@@ -36,22 +36,23 @@ public class GameManager : MonoBehaviour
 		if (!Player.ReachedEnd)
 			TimerCountdown -= Time.deltaTime;
 
-		// if (Player.IsFalling) {
-		// 	StartCoroutine(RestartLevel(2f));
-		// }
-
-		if (Player.ReachedEnd && !_levelCompleteScreenDisplayed) {
-			_isGamePaused = true;
-			if (CheckGoalReached()) {		// Level completed successfully!
-				int numOfStars = CalculateNumOfStarsToDisplay();
-				LevelComplete(numOfStars, _levelCompleteScreenDelay);
+		if (!_levelCompleteScreenDisplayed) {
+			if (Player.IsFalling) {		// Player fell from the platform
+				LevelComplete(0, 0f);
 			}
-			else {		// Not enough cubes are collected!
-				LevelComplete(0, _levelCompleteScreenDelay);
+			else if (Player.ReachedEnd) {
+				_isGamePaused = true;
+				if (CheckGoalReached()) {		// Level completed successfully!
+					int numOfStars = CalculateNumOfStarsToDisplay();
+					LevelComplete(numOfStars, _levelCompleteScreenDelay);
+				}
+				else {		// Not enough cubes are collected!
+					LevelComplete(0, _levelCompleteScreenDelay);
+				}
 			}
-		}
-		else if (!_levelCompleteScreenDisplayed && TimerCountdown <= 0) {		// Time is up!
-			LevelComplete(0, 0.1f);
+			else if (TimerCountdown <= 0) {		// Time is up!
+				LevelComplete(0, 0.1f);
+			}
 		}
 	}
 

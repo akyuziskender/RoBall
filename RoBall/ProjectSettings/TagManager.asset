@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Collectible
   - FinishPlatform
+  - DeathZone
   layers:
   - Default
   - TransparentFX

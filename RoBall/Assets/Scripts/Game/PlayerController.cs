@@ -99,19 +99,14 @@ public class PlayerController : MonoBehaviour
 			SoundManager.PlaySound(SoundManager.Audio.CubeCollect);
 			other.gameObject.SetActive(false);
 		}
+		else if (other.gameObject.CompareTag("DeathZone")) {
+			_isFalling = true;
+		}
 	}
 
 	private void OnCollisionEnter(Collision other) {
 		if (other.gameObject.CompareTag("FinishPlatform")) {
 			_reachedEnd = true;
 		}
-	}
-
-	private void OnCollisionStay(Collision col) { //Takes parameter of Collision so unity doesn't complain
-		_isFalling = false;
-	}
-
-	private void OnCollisionExit() {
-		_isFalling = true;
 	}
 }
