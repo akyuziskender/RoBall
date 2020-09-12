@@ -109,7 +109,14 @@ public class PlayerController : MonoBehaviour
 			_reachedEnd = true;
 		}
 		else if (other.gameObject.CompareTag("MovingPlatform")) {
+			this.transform.parent = other.transform;
 			other.gameObject.transform.parent.GetComponent<Mover>().Moving = true;
+		}
+	}
+
+	private void OnCollisionExit(Collision other) {
+		if (other.gameObject.CompareTag("MovingPlatform")) {
+			this.transform.parent = null;
 		}
 	}
 }
