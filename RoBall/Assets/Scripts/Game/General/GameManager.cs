@@ -23,62 +23,75 @@ public class GameManager : MonoBehaviour
 	private void Start() {
 		SoundManager.Initialize();
 		SoundManager.PlayMusic(SoundManager.Audio.InGameMusic);
+
 		LoadData();
 		CreateLevel();
+
+		if (PlayerPrefManager.GetTutorialSeen() == false) {
+			DisplayTutorialPanel();
+		}
 	}
 
 	private void Update() {
 		if (!Player.ReachedEnd)
 			TimerCountdown -= Time.deltaTime;
 
-		// if (Player.IsFalling) {
-		// 	StartCoroutine(RestartLevel(2f));
-		// }
-
-		if (Player.ReachedEnd && !_levelCompleteScreenDisplayed) {
-			_isGamePaused = true;
-			if (CheckGoalReached()) {		// Level completed successfully!
-				int numOfStars = CalculateNumOfStarsToDisplay();
-				LevelComplete(numOfStars);
+		if (!_levelCompleteScreenDisplayed) {
+			if (Player.IsFalling) {		// Player fell from the platform
+				LevelComplete(0, 0f);
 			}
-			else {		// Not enough cubes are collected!
-				LevelComplete(0);
+			else if (Player.ReachedEnd) {
+				_isGamePaused = true;
+				if (CheckGoalReached()) {		// Level completed successfully!
+					int numOfStars = CalculateNumOfStarsToDisplay();
+					LevelComplete(numOfStars, _levelCompleteScreenDelay);
+				}
+				else {		// Not enough cubes are collected!
+					LevelComplete(0, _levelCompleteScreenDelay);
+				}
 			}
-		}
-		else if (!_levelCompleteScreenDisplayed && TimerCountdown <= 0) {		// Time is up!
-			LevelComplete(0);
+			else if (TimerCountdown <= 0) {		// Time is up!
+				LevelComplete(0, 0.1f);
+			}
 		}
 	}
 
+	private void DisplayTutorialPanel() {
+		GameUIController.DisplayTutorialPanel();
+		PlayerPrefManager.SetTutorialSeen(true);
+		TogglePause();
+	}
+
 	private void LoadData() {
-		_playerData = SaveSystem.LoadData();
 		_currentLevel = DataManager.Instance.SelectedLevel;
 
 		if (_currentLevel == GameConfigData.Instance.NumOfLevels) {
 			_currentLevel--;
 		}
-
-		if (PlayerPrefManager.GetTutorialSeen() == false) {
-			GameUIController.DisplayTutorialPanel();
-			PlayerPrefManager.SetTutorialSeen(true);
-			TogglePause();
-		}
 	}
 
 	private void SaveData(int passedLevel, int stars) {
+		_playerData = SaveSystem.LoadData();
+
+		if (_playerData != null && _playerData.CurrentLevel != passedLevel) {
+			// checking if the score is less than the previous one
+			if (_playerData.Scores[passedLevel] >= stars)
+				return;		// return and don't save this score
+		}
+
 		SaveSystem.SaveData(passedLevel, stars);
 	}
 
-	private void LevelComplete(int numOfStars) {
-		StartCoroutine(GameUIController.DisplayLevelCompleteScreen(numOfStars, _levelCompleteScreenDelay));
+	private void LevelComplete(int numOfStars, float panelDelay) {
+		StartCoroutine(GameUIController.DisplayLevelCompleteScreen(numOfStars, panelDelay));
 		_levelCompleteScreenDisplayed = true;
 
 		if (numOfStars > 0) {
-			StartCoroutine(SoundManager.PlaySoundWithDelay(SoundManager.Audio.LevelWin, _levelCompleteScreenDelay));
+			StartCoroutine(SoundManager.PlaySoundWithDelay(SoundManager.Audio.LevelWin, panelDelay));
 			SaveData(_currentLevel, numOfStars);
 		}
 		else {
-			StartCoroutine(SoundManager.PlaySoundWithDelay(SoundManager.Audio.LevelLose, _levelCompleteScreenDelay));
+			StartCoroutine(SoundManager.PlaySoundWithDelay(SoundManager.Audio.LevelLose, panelDelay));
 		}
 	}
 
@@ -128,6 +141,14 @@ public class GameManager : MonoBehaviour
 
 	private int CalculateNumOfStarsToDisplay() {
 		float cubePercentage = ((float)(Player.CubeCount - LevelGoal) + 1) / (float)((NumOfCubes - LevelGoal) + 1);
-		return Mathf.RoundToInt(cubePercentage * 3);
+		int numOfStars = Mathf.RoundToInt(cubePercentage * 3);
+
+		// make sure that max number of star is 3 and min is 1
+		if (numOfStars > 3)
+			numOfStars = 3;
+		else if (numOfStars < 1)
+			numOfStars = 1;
+
+		return numOfStars;
 	}
 }

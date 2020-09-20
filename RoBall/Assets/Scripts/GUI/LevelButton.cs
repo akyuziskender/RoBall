@@ -14,6 +14,7 @@ public class LevelButton : MonoBehaviour
 	public GameObject Button;
 
 	private void Start() {
+		this.transform.localScale = Vector3.one;
 		_levelNo = Count;
 		Count++;
 	}

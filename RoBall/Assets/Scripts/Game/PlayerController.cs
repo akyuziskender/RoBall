@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,6 +65,11 @@ public class PlayerController : MonoBehaviour
 
 		for (int tapCount = 0; tapCount < Input.touchCount; tapCount++) {
 			Touch touch = Input.GetTouch(tapCount);
+
+			if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) {
+				// you touched at least one UI element
+				continue;
+			}
  
 			if (touch.phase == TouchPhase.Began) {
 				if (touch.position.x > _slowdownZoneEnd) {		// controlling horizontal movement
@@ -93,19 +99,24 @@ public class PlayerController : MonoBehaviour
 			SoundManager.PlaySound(SoundManager.Audio.CubeCollect);
 			other.gameObject.SetActive(false);
 		}
+		else if (other.gameObject.CompareTag("DeathZone")) {
+			_isFalling = true;
+		}
 	}
 
 	private void OnCollisionEnter(Collision other) {
 		if (other.gameObject.CompareTag("FinishPlatform")) {
 			_reachedEnd = true;
 		}
+		else if (other.gameObject.CompareTag("MovingPlatform")) {
+			this.transform.parent = other.transform;
+			other.gameObject.transform.parent.GetComponent<Mover>().Moving = true;
+		}
 	}
 
-	private void OnCollisionStay(Collision col) { //Takes parameter of Collision so unity doesn't complain
-		_isFalling = false;
-	}
-
-	private void OnCollisionExit() {
-		_isFalling = true;
+	private void OnCollisionExit(Collision other) {
+		if (other.gameObject.CompareTag("MovingPlatform")) {
+			this.transform.parent = null;
+		}
 	}
 }
