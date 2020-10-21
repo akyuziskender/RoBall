@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-public class LevelData : MonoBehaviour
+namespace Game
 {
-    public int NumOfCubes, Goal;
-    public float Time;
+	public class LevelData : MonoBehaviour
+	{
+		public int NumOfCubes, Goal;
+		public float Time;
+	}
 }
