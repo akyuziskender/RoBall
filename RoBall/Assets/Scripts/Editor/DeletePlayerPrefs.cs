@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor; // include UnityEditor since this is an editor script
 
 namespace Editor
